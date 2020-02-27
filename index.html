@@ -2,7 +2,8 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>RUA</title>
+		<title>邵京生艺术主页</title>
+		<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 		<style type="text/css">
 			#topbox{
 				margin: 0px auto 168px auto;
@@ -30,7 +31,7 @@
 			#name{
 			margin: 0px auto 20px auto;
 			font-size: 24px;
-			font-family: "blackadder itc";	
+			font-family: "blackadder itc",serif;
 			text-align: center;
 			}
 			#textbox{
@@ -53,6 +54,13 @@
 				float: left;
 				margin: 0px 30px 80px 0px;
 			}
+			.work img{
+				width: 300px;
+				height: 300px;
+			}
+			.lineEnd{
+				margin-right: 0;
+			}
 			.work_name{
 				padding: 0px;
 				font-size: 14px;
@@ -63,6 +71,8 @@
 				position: fixed;
 				right: 70px;
 				top: 40%;
+				background-color: white;
+				cursor: pointer;
 			}
 			.button{
 			padding: 0px 5px;
@@ -74,6 +84,73 @@
 			height: 40px;
 			}
 		</style>
+
+		<script>
+            var index = 1;
+            var closed = false;
+            function changeList(arg) {
+                for(var i=0;i<6;i++){
+                    if(arg[i]==null){
+                        closed = true;
+                        break;
+					}
+                    let html = "<div class='work'>\n";
+                    if(i==2||i==5){
+                        html = "<div class='work lineEnd'>\n";
+					}
+                    html +="<img src='"+ arg[i].url +"' >\n" +
+                        "<div class='work_name'>\n" +
+                        arg[i].name +
+                        "</div>\n" +
+                        "</div>";
+                    $("#display").append(html);
+				}
+            }
+            function reachBottom() {
+                if(closed)
+				{
+				    return;
+				}
+                let url = '/server/WorkInfo.php?start='+(index*6+1)+'&num='+(index*6+6);
+                $.ajax({
+                    url: url,
+                    success: function (data) {
+                        changeList($.parseJSON(data));
+                        index++;
+                    },
+                    error: function (e) {console.log("error");}
+                });
+            }
+
+			$(document).ready(function () {
+				let topicbox1Y = $("#topicbox1").offset().top;
+				let topicbox2Y = $("#topicbox2").offset().top;
+                let topicbox3Y = $("#topicbox3").offset().top;
+                $("#button1").click(function () {
+                    $('html,body').animate({scrollTop:topicbox1Y},'slow');
+                });
+                $("#button2").click(function () {
+                    $('html,body').animate({scrollTop:topicbox2Y},'slow');
+                });
+                $("#button3").click(function () {
+                    $('html,body').animate({scrollTop:topicbox3Y},'slow');
+                });
+                $("#button4").click(function () {
+                    $('html,body').animate({scrollTop:0},'slow');
+                });
+                //scroll event
+                $(window).scroll(function(){
+                    let scrollTop = $(this).scrollTop();
+                    let scrollHeight = $(document).height();
+                    let windowHeight = $(this).height();
+                    if(scrollTop + windowHeight == scrollHeight){
+                        reachBottom();
+                    }
+                });
+            });
+
+
+		</script>
 	</head>
 	<body>
 
@@ -84,7 +161,7 @@
 				画家简介
 			</div>
 			<div id="iconbox">
-				<img src="img/icon.png" style="border-radius: 60px;">
+				<img src="img/head.jpg" style="border-radius: 60px; width: 128px; height: 128px;">
 			</div>
 			<div id="name">
 				<p>邵京生</p>
@@ -98,83 +175,29 @@
 				<br>
 				2013-2016年，他的作品在中国嘉德拍卖（大榕树）中国荣宝拍卖（版纳人物）中国瀚海拍卖（新疆人物四条屏），都以七位的数字成功拍出。作品深受国内外收藏家喜爱。
 			</div>
+
 			<div id="topicbox2" class="topic">
-				作品简介
+				专题画展
+			</div>
+
+			<div id="topicbox3" class="topic">
+				代表作品
 			</div>
 			<div id="display">
-				<div id="work1" class="work">
-					<img src="img/300x300.jpg" >
-					<div id="work_name1" class="work_name">
-						作品名
-					</div>
-				</div>
-				
-				<div id="work2" class="work">
-					<img src="img/300x300.jpg" >
-					<div id="work_name2" class="work_name">
-						作品名
-					</div>
-				</div>
-				
-				<div id="work3" class="work" style="margin: 0px;">
-					<img src="img/300x300.jpg" >
-					<div id="work_name3" class="work_name">
-						作品名
-					</div>
-				</div>
-				
-				<div id="work4" class="work">
-					<img src="img/300x300.jpg" >
-					<div id="work_name4" class="work_name">
-						作品名
-					</div>
-				</div>
-				
-				<div id="work5" class="work">
-					<img src="img/300x300.jpg" >
-					<div id="work_name5" class="work_name">
-						作品名
-					</div>
-				</div>
-				
-				<div id="work6" class="work" style="margin: 0px;">
-					<img src="img/300x300.jpg" >
-					<div id="work_name6" class="work_name">
-						作品名
-					</div>
-				</div>
-				
-				<div id="work7" class="work">
-					<img src="img/300x300.jpg" >
-					<div id="work_name7" class="work_name">
-						作品名
-					</div>
-				</div>
-				
-				<div id="work8" class="work">
-					<img src="img/300x300.jpg" >
-					<div id="work_name8" class="work_name">
-						作品名
-					</div>
-				</div>
-				
-				<div id="work9" class="work" style="margin: 0px;">
-					<img src="img/300x300.jpg" >
-					<div id="work_name9" class="work_name">
-						作品名
-					</div>
-				</div>
-				
+
 			</div>
+
+
+
 			<div id="right_buttons">
 				<div id="button1" class="button">
 					画家简介
 				</div>
 				<div id="button2" class="button">
-					代表作品
+					专题画展
 				</div>
 				<div id="button3" class="button">
-					画展竞拍
+					代表作品
 				</div>
 				<div id="button4" class="button" style="border: 0px;">
 					顶部
