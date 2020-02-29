@@ -9,6 +9,25 @@
 				margin: 0px auto 168px auto;
 				text-align: center;
 			}
+			#topbox img{
+				width: 1348px;
+				height: 486px;
+			}
+			#theme{
+				width: 960px;
+				margin: auto auto 60px auto;
+
+			}
+			#theme h1{
+				font-size: 1.5em;
+				text-align: center;
+				margin-top: 3em;
+			}
+			#theme img{
+				width: 100%;
+				box-shadow: grey 5px 5px 30px;
+				border-radius: 30px;
+			}
 			.topic{
 				margin: 0px auto 48px auto;
 				width: 500px;
@@ -43,7 +62,7 @@
 				text-align: center;
 			}
 			#topicbox2{
-				margin: 0px auto 86px auto;
+				margin: 0 auto;
 				text-align: center;
 			}
 			#display{
@@ -98,7 +117,7 @@
                     if(i==2||i==5){
                         html = "<div class='work lineEnd'>\n";
 					}
-                    html +="<img src='"+ arg[i].url +"' >\n" +
+                    html +="<img src='"+ arg[i].url +"' onclick='OnClickWork(this);'>\n" +
                         "<div class='work_name'>\n" +
                         arg[i].name +
                         "</div>\n" +
@@ -149,13 +168,16 @@
                 });
             });
 
+            function OnClickWork(item) {
+				window.open($(item).attr("src"));
+            }
 
 		</script>
 	</head>
 	<body>
 
 			<div id="topbox">
-				<img src="img/1348x486.jpg" >
+				<img src="img/banner2.jpg" >
 			</div>
 			<div id="topicbox1" class="topic">
 				画家简介
@@ -178,6 +200,12 @@
 
 			<div id="topicbox2" class="topic">
 				专题画展
+			</div>
+			<div id="theme">
+				<h1>加拿大举办中国当代著名画家邵京生一带一路新丝绸之路吐鲁番艺术展</h1>
+				<img src="img/topic/p1.jpg">
+				<h1>新疆风情人物</h1>
+				<img src="img/topic/p6.jpg">
 			</div>
 
 			<div id="topicbox3" class="topic">
