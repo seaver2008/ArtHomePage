@@ -130,7 +130,7 @@
 				{
 				    return;
 				}
-                let url = '/server/WorkInfo.php?start='+(index*6+1)+'&num='+(index*6+6);
+                let url = 'server/WorkInfo.php?start='+(index*6+1)+'&num='+(index*6+6);
                 $.ajax({
                     url: url,
                     success: function (data) {
