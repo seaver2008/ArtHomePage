@@ -90,10 +90,10 @@
 				height: 100%;
 			}
 			#name{
-			margin: 0px auto 20px auto;
-			font-size: 24px;
-			font-family: "blackadder itc",serif;
-			text-align: center;
+				margin: 0px auto 20px auto;
+				font-size: 24px;
+				font-family: "blackadder itc",serif;
+				text-align: center;
 			}
 			#textbox{
 				font-size: 24px;
@@ -119,6 +119,7 @@
 				width: 400px;
 				background-color: white;
 				box-shadow: 2px 3px 30px gray;
+				cursor: pointer;
 			}
 			.work img{
 				width: 100%;
@@ -128,7 +129,12 @@
 			}
 			.work_name{
 				padding: 0px;
-				font-size: 14px;
+				text-align: center;
+				position: absolute;
+				font-size: 24px;
+				color: white;
+				width: 400px;
+				background-color: rgba(0,0,0,0.5);
 			}
 			#right_buttons{
 				border: 1px solid gray;
@@ -151,6 +157,7 @@
 		</style>
 
 		<script>
+			var timer = 0;
             var index = 0;
             var closed = false;
             function changeList(arg) {
@@ -159,18 +166,32 @@
                         closed = true;
                         break;
 					}
-                    let html = "<div class='work'>\n";
-                    // if(i==2||i==5){
-                     //    html = "<div class='work lineEnd'>\n";
-					// }
-                    html +="<img src='img/thumb/"+ arg[i].url +"' onclick='OnClickWork(this);' res='img/"+ arg[i].url +"'>\n" +
-                        // "<div class='work_name'>\n" +
-                        // arg[i].name +
-                        // "</div>\n" +
+                    let html = "<div class='work' onmouseenter='NameShow(this);' onmouseleave='NameHide(this);' onclick='OnClickWork(this);' res='img/"+ arg[i].url +"'>\n";
+                    html +=
+						"<div class='work_name' hidden>\n" +
+                        arg[i].name +
+                        "</div>\n" +
+						"<img src='img/thumb/"+ arg[i].url +"' workName='"+ arg[i].name +"'>\n" +
                         "</div>";
                     $("#display").append(html);
+
+                    setTimeout(function () {
+                        $(".work_name").each(function () {
+                            $(this).height($(this).parent().height());
+                            $(this).css("line-height", $(this).parent().height() + "px");
+                        });
+                    }, 100);
+
 				}
             }
+
+            function NameShow(elem) {
+                $(elem).children(".work_name").fadeIn("fast");
+            }
+            function NameHide(elem) {
+                $(elem).children(".work_name").fadeOut("fast");
+            }
+
             function reachBottom() {
                 if(closed)
 				{
@@ -195,6 +216,7 @@
                 overlay.width(bannerImg.width());
                 overlay.height(bannerImg.height());
                 overlay.animate({opacity:'0'},"slow");
+                let int=self.setInterval("clock()",3000);
 			    //navigation
 				let topicbox1Y = $("#topicbox1").offset().top;
 				let topicbox2Y = $("#topicbox2").offset().top;
@@ -226,8 +248,9 @@
 				window.open($(item).attr("res"));
             }
 
-            function OnBannerBtn(item) {
-                let elem = $(item);
+            function OnBannerBtn(idx) {
+                timer = idx;
+                let elem = $("#chooseBox .borderNormal").eq(idx);
 				let src = elem.attr("src");
 				let overlay = $("#overlay");
 
@@ -237,6 +260,12 @@
                     $("#bannerImg").attr("src",src);
 					overlay.animate({opacity:'0'},"slow");
                 });
+            }
+
+            function clock() {
+                timer++;
+                if(timer>=5) timer=0;
+				OnBannerBtn(timer);
             }
 		</script>
 	</head>
@@ -248,11 +277,11 @@
 					<img src="img/Title.png">
 				</div>
 				<div id="chooseBox">
-					<img src="img/banner/b01.jpg" class="borderNormal borderSelected" onclick="OnBannerBtn(this)">
-					<img src="img/banner/b02.jpg" class="borderNormal" onclick="OnBannerBtn(this)">
-					<img src="img/banner/b03.jpg" class="borderNormal" onclick="OnBannerBtn(this)">
-					<img src="img/banner/b04.jpg" class="borderNormal" onclick="OnBannerBtn(this)">
-					<img src="img/banner/b05.jpg" class="borderNormal" onclick="OnBannerBtn(this)" style="float:none;">
+					<img src="img/banner/b01.jpg" class="borderNormal borderSelected" onclick="OnBannerBtn(0)">
+					<img src="img/banner/b02.jpg" class="borderNormal" onclick="OnBannerBtn(1)">
+					<img src="img/banner/b03.jpg" class="borderNormal" onclick="OnBannerBtn(2)">
+					<img src="img/banner/b04.jpg" class="borderNormal" onclick="OnBannerBtn(3)">
+					<img src="img/banner/b05.jpg" class="borderNormal" onclick="OnBannerBtn(4)" style="float:none;">
 				</div>
 			</div>
 
